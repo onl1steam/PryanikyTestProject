@@ -12,9 +12,21 @@ class MainViewPresenter {
     
     // MARK: - Private Properties
     weak private var mainViewDelegate: MainViewDelegate?
+    private var networkService: NetworkServiceDelegate
+    
+    // MARK: - Initializers
+    init(networkService: NetworkServiceDelegate = ServiceLayer.shared.networkService) {
+        self.networkService = networkService
+    }
     
     // MARK: - Public methods
     func setViewDelegate(_ viewDelegate: MainViewDelegate) {
         mainViewDelegate = viewDelegate
+    }
+    
+    func getData() {
+        networkService.makeRequst { response in
+            print(response)
+        }
     }
 }
