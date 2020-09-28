@@ -9,7 +9,8 @@
 import Foundation
 
 protocol NetworkServiceDelegate {
-    func makeRequst(_ completion: @escaping(Result<NetworkResponse, Error>) -> Void)
+    func makeDataRequst(_ completion: @escaping(Result<NetworkResponse, Error>) -> Void)
+    func makeImageRequest(with url: URL, _ completion: @escaping(Result<Data, Error>) -> Void)
 }
 
 class NetworkService: NetworkServiceDelegate {
@@ -24,14 +25,44 @@ class NetworkService: NetworkServiceDelegate {
         self.session = session
     }
     
-    func makeRequst(_ completion: @escaping(Result<NetworkResponse, Error>) -> Void) {
+    func makeDataRequst(_ completion: @escaping(Result<NetworkResponse, Error>) -> Void) {
         guard let requestURL = APIConfiguration.requestURL else { return }
         let dataTask = session.dataTask(with: requestURL) { data, response, error in
+            if let networkError = error {
+                DispatchQueue.main.async {
+                    completion(.failure(networkError))
+                }
+                return
+            }
+            
             do {
                 let decodedData = try JSONDecoder().decode(NetworkResponse.self, from: data!)
-                completion(.success(decodedData))
+                DispatchQueue.main.async {
+                    completion(.success(decodedData))
+                }
             } catch let networkError {
-                completion(.failure(networkError))
+                DispatchQueue.main.async {
+                    completion(.failure(networkError))
+                }
+            }
+        }
+        dataTask.resume()
+    }
+    
+    func makeImageRequest(with url: URL, _ completion: @escaping(Result<Data, Error>) -> Void) {
+        let dataTask = session.dataTask(with: url) { data, response, error in
+            if let networkError = error {
+                DispatchQueue.main.async {
+                    completion(.failure(networkError))
+                }
+                return
+            }
+            
+            if let requestData = data {
+                DispatchQueue.main.async {
+                    completion(.success(requestData))
+                }
+                return
             }
         }
         dataTask.resume()

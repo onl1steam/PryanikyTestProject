@@ -12,7 +12,7 @@ class TextTableViewCell: UITableViewCell {
     
     static let reuseIdentifier = "TextTableViewCell"
     
-    lazy var imageLabel: UILabel = {
+    lazy var label: UILabel = {
         let label = UILabel()
         label.text = ""
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
@@ -40,10 +40,8 @@ class TextTableViewCell: UITableViewCell {
     }
     
     func setupImageLabelConstraints() {
-        addSubview(imageLabel)
-        imageLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        imageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40).isActive = true
-        imageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 10).isActive = true
+        addSubview(label)
+        label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40).isActive = true
     }
-
 }

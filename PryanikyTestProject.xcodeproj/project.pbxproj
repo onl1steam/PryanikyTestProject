@@ -20,6 +20,8 @@
 		92D84F7E2521E99600C11030 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F7D2521E99600C11030 /* NetworkResponse.swift */; };
 		92D84F9025222F8400C11030 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F8F25222F8400C11030 /* ImageTableViewCell.swift */; };
 		92D84F92252234C300C11030 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F91252234C300C11030 /* TextTableViewCell.swift */; };
+		92D84F942522443300C11030 /* SelectorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F932522443300C11030 /* SelectorTableViewCell.swift */; };
+		92D84F9725225A3C00C11030 /* SelectorButtonsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F9625225A3C00C11030 /* SelectorButtonsTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		92D84F7D2521E99600C11030 /* NetworkResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
 		92D84F8F25222F8400C11030 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		92D84F91252234C300C11030 /* TextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
+		92D84F932522443300C11030 /* SelectorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorTableViewCell.swift; sourceTree = "<group>"; };
+		92D84F9625225A3C00C11030 /* SelectorButtonsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorButtonsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,10 +126,20 @@
 		92D84F8225221A7F00C11030 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				92D84F95252259F600C11030 /* SelectorTableViewCell */,
 				92D84F8F25222F8400C11030 /* ImageTableViewCell.swift */,
 				92D84F91252234C300C11030 /* TextTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		92D84F95252259F600C11030 /* SelectorTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				92D84F932522443300C11030 /* SelectorTableViewCell.swift */,
+				92D84F9625225A3C00C11030 /* SelectorButtonsTableViewCell.swift */,
+			);
+			path = SelectorTableViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,9 +217,11 @@
 				92D84F7E2521E99600C11030 /* NetworkResponse.swift in Sources */,
 				92D84F712521D3F600C11030 /* MainViewController.swift in Sources */,
 				92D84F9025222F8400C11030 /* ImageTableViewCell.swift in Sources */,
+				92D84F9725225A3C00C11030 /* SelectorButtonsTableViewCell.swift in Sources */,
 				92D84F92252234C300C11030 /* TextTableViewCell.swift in Sources */,
 				92D84F5A2521D0B300C11030 /* AppDelegate.swift in Sources */,
 				92D84F762521D62700C11030 /* MainViewDelegate.swift in Sources */,
+				92D84F942522443300C11030 /* SelectorTableViewCell.swift in Sources */,
 				92D84F792521D93500C11030 /* NetworkService.swift in Sources */,
 				92D84F5C2521D0B300C11030 /* SceneDelegate.swift in Sources */,
 				92D84F7B2521D94C00C11030 /* ServiceLayer.swift in Sources */,

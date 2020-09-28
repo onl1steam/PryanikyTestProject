@@ -6,8 +6,9 @@
 //  Copyright © 2020 Рыжков Артем. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol MainViewDelegate: NSObjectProtocol {
-    
+    func updateTableView()
+    func updateImageView(for row: Int, with image: UIImage)
 }
