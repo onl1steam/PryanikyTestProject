@@ -48,15 +48,15 @@ class SelectorButtonsTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func setupSelectorImageViewConstraints() {
+    private func setupSelectorImageViewConstraints() {
         addSubview(selectorImageView)
         selectorImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        selectorImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        selectorImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
         selectorImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         selectorImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
     }
     
-    func setupSelectorLabelConstraints() {
+    private func setupSelectorLabelConstraints() {
         addSubview(selectorLabel)
         selectorLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         selectorLabel.leadingAnchor.constraint(equalTo: selectorImageView.trailingAnchor, constant: 20).isActive = true

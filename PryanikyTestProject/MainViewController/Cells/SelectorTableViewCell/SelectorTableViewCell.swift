@@ -14,16 +14,7 @@ class SelectorTableViewCell: UITableViewCell {
     
     private var checkedCellIndexPath: IndexPath? = IndexPath(row: 2, section: 0)
     private var selectorData: ResponseData?
-    
-    private lazy var tableLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Text"
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .black
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private var parentViewController: ParentViewControllerDelegate?
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -40,7 +31,6 @@ class SelectorTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupLabelConstraints()
         setupTableViewConstraints()
     }
     
@@ -56,25 +46,18 @@ class SelectorTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func setSelectorData(_ selectorData: ResponseData?) {
-        self.selectorData = selectorData
-        guard let title = selectorData?.data.text else {
-            tableLabel.text = ""
-            return
-        }
-        tableLabel.text = title
+    func setParentViewController(_ parentViewController: ParentViewControllerDelegate) {
+        self.parentViewController = parentViewController
     }
     
-    private func setupLabelConstraints() {
-        addSubview(tableLabel)
-        tableLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
-        tableLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+    func setSelectorData(_ selectorData: ResponseData?) {
+        self.selectorData = selectorData
     }
     
     private func setupTableViewConstraints() {
         addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: tableLabel.bottomAnchor, constant: 0).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        tableView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }
@@ -87,6 +70,8 @@ extension SelectorTableViewCell: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        parentViewController?.selectorButtonTapped(selectedId: indexPath.row)
+        
         guard let previousIndexPath = checkedCellIndexPath else { return }
         let previousCell = tableView.cellForRow(at: previousIndexPath) as! SelectorButtonsTableViewCell
         previousCell.selectorImageView.image = UIImage(systemName: "circle")
@@ -95,7 +80,6 @@ extension SelectorTableViewCell: UITableViewDelegate {
         selectedCell.selectorImageView.image = UIImage(systemName: "checkmark.circle")
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
         checkedCellIndexPath = indexPath
     }
 }

@@ -39,9 +39,9 @@ class TextTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func setupImageLabelConstraints() {
+    private func setupImageLabelConstraints() {
         addSubview(label)
         label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40).isActive = true
+        label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
     }
 }

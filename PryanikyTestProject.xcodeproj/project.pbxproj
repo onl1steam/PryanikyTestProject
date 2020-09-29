@@ -12,9 +12,8 @@
 		92D84F632521D0B400C11030 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92D84F622521D0B400C11030 /* Assets.xcassets */; };
 		92D84F662521D0B400C11030 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92D84F642521D0B400C11030 /* LaunchScreen.storyboard */; };
 		92D84F712521D3F600C11030 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F6F2521D3F600C11030 /* MainViewController.swift */; };
-		92D84F722521D3F600C11030 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92D84F702521D3F600C11030 /* MainViewController.xib */; };
 		92D84F742521D40C00C11030 /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F732521D40C00C11030 /* MainViewPresenter.swift */; };
-		92D84F762521D62700C11030 /* MainViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F752521D62700C11030 /* MainViewDelegate.swift */; };
+		92D84F762521D62700C11030 /* MainViewControllerProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F752521D62700C11030 /* MainViewControllerProtocols.swift */; };
 		92D84F792521D93500C11030 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F782521D93500C11030 /* NetworkService.swift */; };
 		92D84F7B2521D94C00C11030 /* ServiceLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F7A2521D94C00C11030 /* ServiceLayer.swift */; };
 		92D84F7E2521E99600C11030 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F7D2521E99600C11030 /* NetworkResponse.swift */; };
@@ -22,6 +21,7 @@
 		92D84F92252234C300C11030 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F91252234C300C11030 /* TextTableViewCell.swift */; };
 		92D84F942522443300C11030 /* SelectorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F932522443300C11030 /* SelectorTableViewCell.swift */; };
 		92D84F9725225A3C00C11030 /* SelectorButtonsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F9625225A3C00C11030 /* SelectorButtonsTableViewCell.swift */; };
+		92D84F992522AFE900C11030 /* MainViewController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D84F982522AFE900C11030 /* MainViewController+UITableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,9 +32,8 @@
 		92D84F652521D0B400C11030 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		92D84F672521D0B400C11030 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92D84F6F2521D3F600C11030 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		92D84F702521D3F600C11030 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		92D84F732521D40C00C11030 /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
-		92D84F752521D62700C11030 /* MainViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewDelegate.swift; sourceTree = "<group>"; };
+		92D84F752521D62700C11030 /* MainViewControllerProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerProtocols.swift; sourceTree = "<group>"; };
 		92D84F782521D93500C11030 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		92D84F7A2521D94C00C11030 /* ServiceLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLayer.swift; sourceTree = "<group>"; };
 		92D84F7D2521E99600C11030 /* NetworkResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
@@ -42,6 +41,7 @@
 		92D84F91252234C300C11030 /* TextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
 		92D84F932522443300C11030 /* SelectorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorTableViewCell.swift; sourceTree = "<group>"; };
 		92D84F9625225A3C00C11030 /* SelectorButtonsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorButtonsTableViewCell.swift; sourceTree = "<group>"; };
+		92D84F982522AFE900C11030 /* MainViewController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+UITableView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +98,9 @@
 			children = (
 				92D84F8225221A7F00C11030 /* Cells */,
 				92D84F6F2521D3F600C11030 /* MainViewController.swift */,
-				92D84F702521D3F600C11030 /* MainViewController.xib */,
 				92D84F732521D40C00C11030 /* MainViewPresenter.swift */,
-				92D84F752521D62700C11030 /* MainViewDelegate.swift */,
+				92D84F752521D62700C11030 /* MainViewControllerProtocols.swift */,
+				92D84F982522AFE900C11030 /* MainViewController+UITableView.swift */,
 			);
 			path = MainViewController;
 			sourceTree = "<group>";
@@ -201,7 +201,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				92D84F662521D0B400C11030 /* LaunchScreen.storyboard in Resources */,
-				92D84F722521D3F600C11030 /* MainViewController.xib in Resources */,
 				92D84F632521D0B400C11030 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,10 +219,11 @@
 				92D84F9725225A3C00C11030 /* SelectorButtonsTableViewCell.swift in Sources */,
 				92D84F92252234C300C11030 /* TextTableViewCell.swift in Sources */,
 				92D84F5A2521D0B300C11030 /* AppDelegate.swift in Sources */,
-				92D84F762521D62700C11030 /* MainViewDelegate.swift in Sources */,
+				92D84F762521D62700C11030 /* MainViewControllerProtocols.swift in Sources */,
 				92D84F942522443300C11030 /* SelectorTableViewCell.swift in Sources */,
 				92D84F792521D93500C11030 /* NetworkService.swift in Sources */,
 				92D84F5C2521D0B300C11030 /* SceneDelegate.swift in Sources */,
+				92D84F992522AFE900C11030 /* MainViewController+UITableView.swift in Sources */,
 				92D84F7B2521D94C00C11030 /* ServiceLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

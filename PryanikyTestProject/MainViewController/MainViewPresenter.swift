@@ -27,23 +27,24 @@ class MainViewPresenter {
         mainViewDelegate = viewDelegate
     }
     
-    func getData() {
+    func fetchData() {
+        mainViewDelegate?.toggleActivityIndicator()
         networkService.makeDataRequst { [weak self] response in
             switch response {
             case .success(let requestData):
                 self?.data = requestData.data
                 self?.dataTypes = requestData.view
-                print(requestData.data)
-                print(requestData.view)
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
             }
+            self?.mainViewDelegate?.toggleActivityIndicator()
             self?.mainViewDelegate?.updateTableView()
         }
     }
     
-    func getImage(for row: Int) {
+    func fetchImage(for row: Int) {
         guard let imageURLString = data[1].data.url, let imageURL = URL(string: imageURLString) else { return }
+        mainViewDelegate?.toggleActivityIndicator()
         networkService.makeImageRequest(with: imageURL) { [weak self] response in
             switch response {
             case .success(let data):
@@ -52,7 +53,32 @@ class MainViewPresenter {
             case .failure(let error):
                 print("Error: \(error)")
             }
+            self?.mainViewDelegate?.toggleActivityIndicator()
         }
+    }
+    
+    func tableViewElementDidTapped(for row: Int) {
+        guard let responseData = getResponseData(for: dataTypes[row]) else { return }
+        let dataType = dataTypes[row]
+        
+        switch dataType {
+        case "hz":
+            guard let info = responseData.data.text else { return }
+            mainViewDelegate?.showAlert(title: "Текстовая ячейка", description: "Сообщение: \(info)")
+        case "picture":
+            guard let info = responseData.data.text else { return }
+            mainViewDelegate?.showAlert(title: "Ячейка с изображением", description: "Сообщение: \(info)")
+        default:
+            mainViewDelegate?.showAlert(title: "Неизвестная ячейка", description: "Неизвестная ячейка")
+        }
+    }
+    
+    func selectorElementDidTapped(selectedId: Int) {
+        guard let responseData = getResponseData(for: "selector") else { return }
+
+        guard let info = responseData.data.variants?[selectedId].text else { return }
+        mainViewDelegate?.showAlert(title: "Ячейка селектора",
+                                    description: "Выбранный вариант: \(info)" + "\n" + "ID варианта: \(selectedId)")
     }
     
     func getViewType(for row: Int) -> String {
@@ -79,7 +105,7 @@ class MainViewPresenter {
         guard let responseData = getResponseData(for: dataTypes[row]),
             let responseText = responseData.data.text else { return }
         cell.imageLabel.text = responseText
-        getImage(for: row)
+        fetchImage(for: row)
     }
     
     func getSelectorData(for row: Int) -> ResponseData? {

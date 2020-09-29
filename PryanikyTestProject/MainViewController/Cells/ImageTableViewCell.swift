@@ -47,15 +47,15 @@ class ImageTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func setupImageViewConstraints() {
+    private func setupImageViewConstraints() {
         addSubview(cellImageView)
         cellImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        cellImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40).isActive = true
+        cellImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
         cellImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         cellImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
     }
     
-    func setupImageLabelConstraints() {
+    private func setupImageLabelConstraints() {
         addSubview(imageLabel)
         imageLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         imageLabel.leadingAnchor.constraint(equalTo: cellImageView.trailingAnchor, constant: 40).isActive = true

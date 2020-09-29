@@ -10,16 +10,29 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    private lazy var tableView: UITableView = {
+        let mainTableView = UITableView()
+        return mainTableView
+    }()
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
+    }()
     
     // MARK: - Private Properties
-    private var mainViewPresenter: MainViewPresenter
+    let mainViewPresenter: MainViewPresenter
     
     // MARK: - Initializers
     init(mainViewPresenter: MainViewPresenter = MainViewPresenter()) {
         self.mainViewPresenter = mainViewPresenter
         super.init(nibName: nil, bundle: nil)
         mainViewPresenter.setViewDelegate(self)
+        setupTableView()
+        setupTableViewContraints()
+        setupActivityIndicatorConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -29,8 +42,13 @@ class MainViewController: UIViewController {
     // MARK: - UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
-        mainViewPresenter.getData()
+        mainViewPresenter.fetchData()
+    }
+    
+    private func setupActivityIndicatorConstraints() {
+        view.addSubview(activityIndicator)
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     private func setupTableView() {
@@ -40,12 +58,30 @@ class MainViewController: UIViewController {
         tableView.register(TextTableViewCell.self, forCellReuseIdentifier: TextTableViewCell.reuseIdentifier)
         tableView.register(SelectorTableViewCell.self, forCellReuseIdentifier: SelectorTableViewCell.reuseIdentifier)
         tableView.tableFooterView = UIView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func setupTableViewContraints() {
+        view.addSubview(tableView)
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 }
 
 // MARK: - MainViewDelegate
 extension MainViewController: MainViewDelegate {
     
+    func toggleActivityIndicator() {
+        let isActivated = activityIndicator.isHidden
+        if isActivated {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+
     func updateImageView(for row: Int, with image: UIImage) {
         let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as! ImageTableViewCell
         cell.cellImageView.image = image
@@ -54,56 +90,24 @@ extension MainViewController: MainViewDelegate {
     func updateTableView() {
         tableView.reloadData()
     }
-}
-
-extension MainViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let dataType = mainViewPresenter.getViewType(for: indexPath.row)
-        
-        switch dataType {
-        case "hz":
-            return 40
-        case "picture":
-            return 120
-        case "selector":
-            let titleSpace = ((mainViewPresenter.getSelectorData(for: indexPath.row)?.data.text) != nil) ? 20: 0
-            return CGFloat(mainViewPresenter.getSelectorsCount(for: indexPath.row) * 40 + titleSpace)
-        default:
-            return 0
+    func showAlert(title: String, description: String) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        alert.title = title
+        alert.message = description
+        let confirmAction = UIAlertAction(title: "ОК", style: .default, handler: nil)
+        alert.addAction(confirmAction)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }
 
-extension MainViewController: UITableViewDataSource {
+// MARK: - ParentViewControllerDelegate
+extension MainViewController: ParentViewControllerDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mainViewPresenter.getTasksCount()
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let dataType = mainViewPresenter.getViewType(for: indexPath.row)
-        
-        switch dataType {
-        case "hz":
-            let cell = tableView.dequeueReusableCell(withIdentifier:
-                TextTableViewCell.reuseIdentifier, for: indexPath) as! TextTableViewCell
-            mainViewPresenter.configureTextCell(cell, for: indexPath.row)
-            return cell
-        case "picture":
-            let cell = tableView.dequeueReusableCell(withIdentifier:
-                ImageTableViewCell.reuseIdentifier, for: indexPath) as! ImageTableViewCell
-            mainViewPresenter.configureImageCell(cell, for: indexPath.row)
-            return cell
-        case "selector":
-            let cell = tableView.dequeueReusableCell(withIdentifier:
-                SelectorTableViewCell.reuseIdentifier, for: indexPath) as! SelectorTableViewCell
-            cell.selectionStyle = .none
-            let selectorData = mainViewPresenter.getSelectorData(for: indexPath.row)
-            cell.setSelectorData(selectorData)
-            return cell
-        default:
-            return UITableViewCell()
-        }
+    func selectorButtonTapped(selectedId: Int) {
+        mainViewPresenter.selectorElementDidTapped(selectedId: selectedId)
     }
 }
+
