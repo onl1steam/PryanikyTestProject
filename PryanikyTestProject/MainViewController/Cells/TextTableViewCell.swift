@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TextTableViewCell: UITableViewCell {
+final class TextTableViewCell: UITableViewCell {
     
     static let reuseIdentifier = "TextTableViewCell"
     
@@ -41,7 +41,9 @@ class TextTableViewCell: UITableViewCell {
     
     private func setupImageLabelConstraints() {
         addSubview(label)
-        label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        NSLayoutConstraint.activate([
+            label.centerYAnchor.constraint(equalTo: centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
+        ])
     }
 }

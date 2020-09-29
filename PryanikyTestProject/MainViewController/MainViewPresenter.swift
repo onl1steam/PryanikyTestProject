@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewPresenter {
+final class MainViewPresenter {
     
     // MARK: - Private Properties
     weak private var mainViewDelegate: MainViewDelegate?

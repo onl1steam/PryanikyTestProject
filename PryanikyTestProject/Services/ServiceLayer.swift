@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ServiceLayer {
+final class ServiceLayer {
     
     // MARK: - Public Properties
     static let shared = ServiceLayer()

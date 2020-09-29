@@ -13,7 +13,7 @@ protocol NetworkServiceDelegate {
     func makeImageRequest(with url: URL, _ completion: @escaping(Result<Data, Error>) -> Void)
 }
 
-class NetworkService: NetworkServiceDelegate {
+final class NetworkService: NetworkServiceDelegate {
     
     private enum APIConfiguration {
         static let requestURL = URL(string: "https://pryaniky.com/static/json/sample.json")

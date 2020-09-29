@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SelectorButtonsTableViewCell: UITableViewCell {
+final class SelectorButtonsTableViewCell: UITableViewCell {
     
     static let reuseIdentifier = "SelectorButtonsTableViewCell"
     
@@ -24,7 +24,6 @@ class SelectorButtonsTableViewCell: UITableViewCell {
     
     lazy var selectorImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "circle")
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -39,28 +38,31 @@ class SelectorButtonsTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
     private func setupSelectorImageViewConstraints() {
         addSubview(selectorImageView)
-        selectorImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        selectorImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
-        selectorImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        selectorImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        NSLayoutConstraint.activate([
+            selectorImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            selectorImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            selectorImageView.heightAnchor.constraint(equalToConstant: 20),
+            selectorImageView.widthAnchor.constraint(equalToConstant: 20)
+        ])
     }
     
     private func setupSelectorLabelConstraints() {
         addSubview(selectorLabel)
-        selectorLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        selectorLabel.leadingAnchor.constraint(equalTo: selectorImageView.trailingAnchor, constant: 20).isActive = true
-        selectorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 10).isActive = true
+        NSLayoutConstraint.activate([
+            selectorLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            selectorLabel.leadingAnchor.constraint(equalTo: selectorImageView.trailingAnchor, constant: 20),
+            selectorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 10)
+        ])
     }
-
 }

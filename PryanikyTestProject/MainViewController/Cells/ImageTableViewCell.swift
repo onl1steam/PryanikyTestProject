@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageTableViewCell: UITableViewCell {
+final class ImageTableViewCell: UITableViewCell {
     
     static let reuseIdentifier = "ImageTableViewCell"
     
@@ -49,16 +49,20 @@ class ImageTableViewCell: UITableViewCell {
     
     private func setupImageViewConstraints() {
         addSubview(cellImageView)
-        cellImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        cellImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
-        cellImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        cellImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        NSLayoutConstraint.activate([
+            cellImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            cellImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            cellImageView.heightAnchor.constraint(equalToConstant: 100),
+            cellImageView.widthAnchor.constraint(equalToConstant: 100)
+        ])
     }
     
     private func setupImageLabelConstraints() {
         addSubview(imageLabel)
-        imageLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        imageLabel.leadingAnchor.constraint(equalTo: cellImageView.trailingAnchor, constant: 40).isActive = true
-        imageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 10).isActive = true
+        NSLayoutConstraint.activate([
+            imageLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            imageLabel.leadingAnchor.constraint(equalTo: cellImageView.trailingAnchor, constant: 40),
+            imageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 10)
+        ])
     }
 }

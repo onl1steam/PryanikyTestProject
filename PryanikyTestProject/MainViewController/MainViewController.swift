@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let mainTableView = UITableView()
@@ -47,8 +47,10 @@ class MainViewController: UIViewController {
     
     private func setupActivityIndicatorConstraints() {
         view.addSubview(activityIndicator)
-        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
     }
     
     private func setupTableView() {
@@ -63,10 +65,12 @@ class MainViewController: UIViewController {
     
     private func setupTableViewContraints() {
         view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 }
 
@@ -81,7 +85,7 @@ extension MainViewController: MainViewDelegate {
             activityIndicator.stopAnimating()
         }
     }
-
+    
     func updateImageView(for row: Int, with image: UIImage) {
         let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as! ImageTableViewCell
         cell.cellImageView.image = image

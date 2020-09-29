@@ -8,13 +8,16 @@
 
 import UIKit
 
-class SelectorTableViewCell: UITableViewCell {
+final class SelectorTableViewCell: UITableViewCell {
     
     static let reuseIdentifier = "SelectorTableViewCell"
     
     private var checkedCellIndexPath: IndexPath? = IndexPath(row: 2, section: 0)
     private var selectorData: ResponseData?
     private var parentViewController: ParentViewControllerDelegate?
+    
+    private let checkedVariantImage = UIImage(systemName: "checkmark.circle")
+    private let uncheckedVariantImage = UIImage(systemName: "circle")
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -56,10 +59,12 @@ class SelectorTableViewCell: UITableViewCell {
     
     private func setupTableViewConstraints() {
         addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
     }
 }
 
@@ -74,10 +79,10 @@ extension SelectorTableViewCell: UITableViewDelegate {
         
         guard let previousIndexPath = checkedCellIndexPath else { return }
         let previousCell = tableView.cellForRow(at: previousIndexPath) as! SelectorButtonsTableViewCell
-        previousCell.selectorImageView.image = UIImage(systemName: "circle")
+        previousCell.selectorImageView.image = uncheckedVariantImage
         
         let selectedCell = tableView.cellForRow(at: indexPath) as! SelectorButtonsTableViewCell
-        selectedCell.selectorImageView.image = UIImage(systemName: "checkmark.circle")
+        selectedCell.selectorImageView.image = checkedVariantImage
         
         tableView.deselectRow(at: indexPath, animated: true)
         checkedCellIndexPath = indexPath
@@ -99,8 +104,10 @@ extension SelectorTableViewCell: UITableViewDataSource {
                                                  for: indexPath) as! SelectorButtonsTableViewCell
         cell.selectorLabel.text = variants[indexPath.row].text
         if indexPath.row == selectedId {
-            cell.selectorImageView.image = UIImage(systemName: "checkmark.circle")
+            cell.selectorImageView.image = checkedVariantImage
             checkedCellIndexPath = indexPath
+        } else {
+            cell.selectorImageView.image = uncheckedVariantImage
         }
         cell.selectionStyle = .none
         return cell
