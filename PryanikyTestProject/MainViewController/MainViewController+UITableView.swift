@@ -11,6 +11,7 @@ import UIKit
 // MARK: - UITableViewDelegate
 extension MainViewController: UITableViewDelegate {
     
+    // MARK: - Types
     private enum CellHeights {
         static let textCellHeight: CGFloat = 40
         static let pictureCellHeight: CGFloat = 120
@@ -18,6 +19,7 @@ extension MainViewController: UITableViewDelegate {
         static let defaultCellHeight: CGFloat = 0
     }
     
+    // MARK: - Public methods
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let dataType = mainViewPresenter.getViewType(for: indexPath.row)
         
@@ -42,6 +44,7 @@ extension MainViewController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 extension MainViewController: UITableViewDataSource {
     
+    // MARK: - Public methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return mainViewPresenter.getTasksCount()
     }
@@ -61,23 +64,29 @@ extension MainViewController: UITableViewDataSource {
         }
     }
     
+    // MARK: - Private Methods
     private func makeTextCell(for indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier:
-            TextTableViewCell.reuseIdentifier, for: indexPath) as! TextTableViewCell
-        mainViewPresenter.configureTextCell(cell, for: indexPath.row)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier:
+            TextTableViewCell.reuseIdentifier, for: indexPath) as? TextTableViewCell else { return UITableViewCell() }
+        let cellText = mainViewPresenter.getCellText(for: indexPath.row)
+        cell.setCellTitle(cellText)
         return cell
     }
     
     private func makeImageCell(for indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier:
-            ImageTableViewCell.reuseIdentifier, for: indexPath) as! ImageTableViewCell
-        mainViewPresenter.configureImageCell(cell, for: indexPath.row)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier:
+            ImageTableViewCell.reuseIdentifier, for: indexPath) as? ImageTableViewCell else { return UITableViewCell() }
+        let cellText = mainViewPresenter.getCellText(for: indexPath.row)
+        cell.setCellTitle(cellText)
+        mainViewPresenter.setImageCellImage(for: indexPath.row)
         return cell
     }
     
     private func makeSelectorCell(for indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier:
-            SelectorTableViewCell.reuseIdentifier, for: indexPath) as! SelectorTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SelectorTableViewCell.reuseIdentifier,
+                                                       for: indexPath) as? SelectorTableViewCell else {
+                return UITableViewCell()
+        }
         cell.selectionStyle = .none
         cell.setParentViewController(self)
         let selectorData = mainViewPresenter.getSelectorData(for: indexPath.row)

@@ -89,22 +89,13 @@ final class MainViewPresenter {
         return dataTypes.count
     }
     
-    func getSelectorsCount(for row: Int) -> Int {
+    func getCellText(for row: Int) -> String {
         guard let responseData = getResponseData(for: dataTypes[row]),
-            let selectorsCount = responseData.data.variants?.count else { return 0 }
-        return selectorsCount
+            let responseText = responseData.data.text else { return "" }
+        return responseText
     }
     
-    func configureTextCell(_ cell: TextTableViewCell, for row: Int) {
-        guard let responseData = getResponseData(for: dataTypes[row]),
-            let responseText = responseData.data.text else { return }
-        cell.label.text = responseText
-    }
-    
-    func configureImageCell(_ cell: ImageTableViewCell, for row: Int) {
-        guard let responseData = getResponseData(for: dataTypes[row]),
-            let responseText = responseData.data.text else { return }
-        cell.imageLabel.text = responseText
+    func setImageCellImage(for row: Int) {
         fetchImage(for: row)
     }
     
@@ -113,6 +104,13 @@ final class MainViewPresenter {
         return selectorData
     }
     
+    func getSelectorsCount(for row: Int) -> Int {
+        guard let responseData = getResponseData(for: dataTypes[row]),
+            let selectorsCount = responseData.data.variants?.count else { return 0 }
+        return selectorsCount
+    }
+
+    // MARK: Private Methods
     private func getResponseData(for dataType: String) -> ResponseData? {
         for responseData in data {
             if responseData.name == dataType {

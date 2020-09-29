@@ -10,6 +10,7 @@ import UIKit
 
 final class MainViewController: UIViewController {
     
+    // MARK: - Private Properties
     private lazy var tableView: UITableView = {
         let mainTableView = UITableView()
         return mainTableView
@@ -22,7 +23,6 @@ final class MainViewController: UIViewController {
         return activityIndicator
     }()
     
-    // MARK: - Private Properties
     let mainViewPresenter: MainViewPresenter
     
     // MARK: - Initializers
@@ -45,6 +45,7 @@ final class MainViewController: UIViewController {
         mainViewPresenter.fetchData()
     }
     
+    // MARK: Private Methods
     private func setupActivityIndicatorConstraints() {
         view.addSubview(activityIndicator)
         NSLayoutConstraint.activate([
@@ -88,7 +89,7 @@ extension MainViewController: MainViewDelegate {
     
     func updateImageView(for row: Int, with image: UIImage) {
         let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as! ImageTableViewCell
-        cell.cellImageView.image = image
+        cell.setCellImage(image)
     }
     
     func updateTableView() {

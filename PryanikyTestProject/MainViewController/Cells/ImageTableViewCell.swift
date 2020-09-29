@@ -10,9 +10,11 @@ import UIKit
 
 final class ImageTableViewCell: UITableViewCell {
     
+    // MARK: - Public Properties
     static let reuseIdentifier = "ImageTableViewCell"
     
-    lazy var imageLabel: UILabel = {
+    // MARK: - Private Properties
+    private lazy var imageLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
@@ -22,13 +24,14 @@ final class ImageTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var cellImageView: UIImageView = {
+    private lazy var cellImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupImageViewConstraints()
@@ -39,6 +42,7 @@ final class ImageTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UITableViewCell
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -47,6 +51,16 @@ final class ImageTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    // MARK: - Public methods
+    func setCellImage(_ image: UIImage) {
+        cellImageView.image = image
+    }
+    
+    func setCellTitle(_ title: String) {
+        imageLabel.text = title
+    }
+    
+    // MARK: - Private Methods
     private func setupImageViewConstraints() {
         addSubview(cellImageView)
         NSLayoutConstraint.activate([

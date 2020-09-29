@@ -10,8 +10,10 @@ import UIKit
 
 final class SelectorTableViewCell: UITableViewCell {
     
+    // MARK: - Public Properties
     static let reuseIdentifier = "SelectorTableViewCell"
     
+    // MARK: - Private Properties
     private var checkedCellIndexPath: IndexPath? = IndexPath(row: 2, section: 0)
     private var selectorData: ResponseData?
     private var parentViewController: ParentViewControllerDelegate?
@@ -32,6 +34,7 @@ final class SelectorTableViewCell: UITableViewCell {
         return tableView
     }()
     
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupTableViewConstraints()
@@ -41,6 +44,7 @@ final class SelectorTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - UITableViewCell
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -49,6 +53,7 @@ final class SelectorTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    // MARK: - Public methods
     func setParentViewController(_ parentViewController: ParentViewControllerDelegate) {
         self.parentViewController = parentViewController
     }
@@ -57,6 +62,7 @@ final class SelectorTableViewCell: UITableViewCell {
         self.selectorData = selectorData
     }
     
+    // MARK: - Private Methods
     private func setupTableViewConstraints() {
         addSubview(tableView)
         NSLayoutConstraint.activate([
@@ -68,10 +74,17 @@ final class SelectorTableViewCell: UITableViewCell {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension SelectorTableViewCell: UITableViewDelegate {
     
+    // MARK: - Types
+    private enum CellSettings {
+        static let height: CGFloat = 40
+    }
+    
+    // MARK: - Public methods
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40
+        return CellSettings.height
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -79,16 +92,17 @@ extension SelectorTableViewCell: UITableViewDelegate {
         
         guard let previousIndexPath = checkedCellIndexPath else { return }
         let previousCell = tableView.cellForRow(at: previousIndexPath) as! SelectorButtonsTableViewCell
-        previousCell.selectorImageView.image = uncheckedVariantImage
+        previousCell.setSelectorImage(uncheckedVariantImage)
         
         let selectedCell = tableView.cellForRow(at: indexPath) as! SelectorButtonsTableViewCell
-        selectedCell.selectorImageView.image = checkedVariantImage
+        selectedCell.setSelectorImage(checkedVariantImage)
         
         tableView.deselectRow(at: indexPath, animated: true)
         checkedCellIndexPath = indexPath
     }
 }
 
+// MARK: - UITableViewDataSource
 extension SelectorTableViewCell: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -102,12 +116,12 @@ extension SelectorTableViewCell: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: SelectorButtonsTableViewCell.reuseIdentifier,
                                                  for: indexPath) as! SelectorButtonsTableViewCell
-        cell.selectorLabel.text = variants[indexPath.row].text
+        cell.setSelectorTitle(variants[indexPath.row].text)
         if indexPath.row == selectedId {
-            cell.selectorImageView.image = checkedVariantImage
+            cell.setSelectorImage(checkedVariantImage)
             checkedCellIndexPath = indexPath
         } else {
-            cell.selectorImageView.image = uncheckedVariantImage
+            cell.setSelectorImage(uncheckedVariantImage)
         }
         cell.selectionStyle = .none
         return cell

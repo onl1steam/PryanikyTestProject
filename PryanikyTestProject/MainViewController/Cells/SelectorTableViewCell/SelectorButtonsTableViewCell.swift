@@ -10,9 +10,11 @@ import UIKit
 
 final class SelectorButtonsTableViewCell: UITableViewCell {
     
+    // MARK: - Public Properties
     static let reuseIdentifier = "SelectorButtonsTableViewCell"
     
-    lazy var selectorLabel: UILabel = {
+    // MARK: - Private Properties
+    private lazy var selectorLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -22,13 +24,14 @@ final class SelectorButtonsTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var selectorImageView: UIImageView = {
+    private lazy var selectorImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSelectorImageViewConstraints()
@@ -39,6 +42,7 @@ final class SelectorButtonsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UITableViewCell
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -47,6 +51,16 @@ final class SelectorButtonsTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    // MARK: - Public methods
+    func setSelectorImage(_ image: UIImage?) {
+        selectorImageView.image = image
+    }
+    
+    func setSelectorTitle(_ title: String) {
+        selectorLabel.text = title
+    }
+    
+    // MARK: - Private Methods
     private func setupSelectorImageViewConstraints() {
         addSubview(selectorImageView)
         NSLayoutConstraint.activate([

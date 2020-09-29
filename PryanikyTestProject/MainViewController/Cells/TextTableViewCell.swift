@@ -10,9 +10,11 @@ import UIKit
 
 final class TextTableViewCell: UITableViewCell {
     
+    // MARK: - Public Properties
     static let reuseIdentifier = "TextTableViewCell"
     
-    lazy var label: UILabel = {
+    // MARK: - Private Properties
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
@@ -22,6 +24,7 @@ final class TextTableViewCell: UITableViewCell {
         return label
     }()
     
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupImageLabelConstraints()
@@ -31,6 +34,7 @@ final class TextTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - UITableViewCell
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -39,11 +43,17 @@ final class TextTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    // MARK: - Public methods
+    func setCellTitle(_ title: String) {
+        titleLabel.text = title
+    }
+    
+    // MARK: - Private Methods
     private func setupImageLabelConstraints() {
-        addSubview(label)
+        addSubview(titleLabel)
         NSLayoutConstraint.activate([
-            label.centerYAnchor.constraint(equalTo: centerYAnchor),
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
         ])
     }
 }

@@ -15,16 +15,20 @@ protocol NetworkServiceDelegate {
 
 final class NetworkService: NetworkServiceDelegate {
     
+    // MARK: - Types
     private enum APIConfiguration {
         static let requestURL = URL(string: "https://pryaniky.com/static/json/sample.json")
     }
     
+    // MARK: - Private Properties
     private let session: URLSession
     
+    // MARK: - Initializers
     init(session: URLSession = URLSession(configuration: .ephemeral)) {
         self.session = session
     }
     
+    // MARK: - Public methods
     func makeDataRequst(_ completion: @escaping(Result<NetworkResponse, Error>) -> Void) {
         guard let requestURL = APIConfiguration.requestURL else { return }
         let dataTask = session.dataTask(with: requestURL) { data, response, error in
@@ -55,14 +59,10 @@ final class NetworkService: NetworkServiceDelegate {
                 DispatchQueue.main.async {
                     completion(.failure(networkError))
                 }
-                return
-            }
-            
-            if let requestData = data {
+            } else if let requestData = data {
                 DispatchQueue.main.async {
                     completion(.success(requestData))
                 }
-                return
             }
         }
         dataTask.resume()
